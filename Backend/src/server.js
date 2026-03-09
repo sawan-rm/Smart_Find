@@ -3,6 +3,8 @@ const app = express();
 
 const userRouter = require('./routes/user');
 const companyRoute = require('./routes/company');
+const jobRouter = require('./routes/jobs');
+const ApplicationRouter = require('./routes/Application');
 
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
@@ -21,5 +23,7 @@ app.use(cors(corsOption));
 
 app.use('/auth', userRouter);
 app.use('/company', companyRoute);
+app.use('/jobs', jobRouter);
+app.use('/Application', ApplicationRouter);
 
 module.exports = app;

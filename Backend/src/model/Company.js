@@ -5,7 +5,7 @@ const CompanySchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
-      unoque: true,
+      unique: true,
     },
     description: {
       type: String,
@@ -24,7 +24,7 @@ const CompanySchema = new mongoose.Schema(
       ref: "User",
     },
   },
-  { timeStamps: true },
+  { timestamps: true },
 );
 
 const Company = mongoose.model("Company", CompanySchema);

@@ -5,22 +5,23 @@ const applicationSchema = new mongoose.Schema(
     job: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Job",
-      require: true,
+      required: true,
     },
     applicant: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      require: true,
+      required: true,
     },
     status: {
       type: String,
       enum: ["pending", "accepted", "rejected"],
-      require: true,
+      required: true,
+      default: "pending"
     },
   },
   { timestamps: true },
 );
 
-const Application = mongoose.model("application", applicationSchema);
+const Application = mongoose.model("Application", applicationSchema);
 
 module.exports = Application;

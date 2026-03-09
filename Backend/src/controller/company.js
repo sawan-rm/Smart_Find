@@ -35,17 +35,17 @@ const registerCompany = async (req, res) => {
 
 const getCompany = async (req, res) => {
   try {
-    const userId = req.id; //logged in userId
-    const companies = await Company.find({ userId });
+    const user_id = req.id; //logged in userId
+    const companies = await Company.find({ user_id });
 
-    if (!companies) {
+    if (!companies.length) {
       return res.status(404).json({
         message: "Company not found",
         success: false,
       });
     }
     return res.status(200).json({
-      message: "on-working",
+      companies,
       success: true,
     });
   } catch (error) {
@@ -56,8 +56,9 @@ const getCompany = async (req, res) => {
 //get Company By Id
 const getCompanyById = async (req, res) => {
   try {
-    const CompanyId = req.params.id;
-    const findCompany = await Company.findById(CompanyId);
+    const user_id = req.params.id;
+    // console.log("Company Id:", req.params.id);
+    const findCompany = await Company.findById(user_id);
     if (!findCompany) {
       return res.status(404).json({
         message: "Company not found",
@@ -73,27 +74,48 @@ const getCompanyById = async (req, res) => {
   }
 };
 
-const updateCompantInfo = async (req, res) => {
+const updateCompanyInfo = async (req, res) => {
   try {
+    const companyId = req.params.id;
+
+    // Allowed fields
     const { name, description, website, location } = req.body;
-    const file = req.file;
-    //cloudnary
-    const updateData = { name, description, website, location };
-    const company = await Company.findByIdAndUpdate(req.params.id, updateData, {
-      new: true,
+
+    const updateData = {};
+
+    if (name) updateData.name = name;
+    if (description) updateData.description = description;
+    if (website) updateData.website = website;
+    if (location) updateData.location = location;
+
+    // If logo uploaded
+    if (req.file) {
+      updateData.logo = req.file.path; // cloudinary url or file path
+    }
+
+    const company = await Company.findByIdAndUpdate(companyId, updateData, {
+      returnDocument: "after",
+      runValidators: true,
     });
+
     if (!company) {
       return res.status(404).json({
         message: "Company not found",
         success: false,
       });
     }
-    return res.status(201).json({
-      message: "Company Information Updated",
+
+    return res.status(200).json({
+      message: "Company updated successfully",
+      company,
       success: true,
     });
   } catch (error) {
-    console.log(`Inernal Server erro: `, error);
+    console.error("Update company error:", error);
+    return res.status(500).json({
+      message: "Internal server error",
+      success: false,
+    });
   }
 };
 
@@ -101,5 +123,5 @@ module.exports = {
   registerCompany,
   getCompany,
   getCompanyById,
-  updateCompantInfo,
+  updateCompanyInfo,
 };

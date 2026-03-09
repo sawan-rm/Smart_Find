@@ -3,15 +3,15 @@ const {
   registerCompany,
   getCompany,
   getCompanyById,
-  updateCompantInfo,
+  updateCompanyInfo,
 } = require("../controller/company");
 const isAuthenticate = require("../middleware/isAuthenticated");
 
 const router = express.Router();
 
 router.post("/register", isAuthenticate, registerCompany);
-router.post("/get", isAuthenticate, getCompany);
+router.get("/get", isAuthenticate, getCompany);
 router.get("/get/:id", isAuthenticate, getCompanyById);
-router.post("/update/:id", isAuthenticate, updateCompantInfo);
+router.put("/update/:id", isAuthenticate, updateCompanyInfo);
 
 module.exports = router;
