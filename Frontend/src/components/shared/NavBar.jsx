@@ -12,15 +12,23 @@ const NavBar = () => {
     <div className="bg-white">
       <div className="flex items-center justify-between mx-auto max-w-7xl h-16">
         <div>
-          <h1 className="text-2xl font-bold">
+          <h1 className="text-2xl font-bold cursor-pointer transition-all duration-300 hover:scale-110 hover:drop-shadow-lg">
             Job <span className="text-orange-500">Portal</span>
           </h1>
         </div>
         <div className="flex items-center gap-12">
           <ul className="flex font-medium items-center gap-5">
-            <li>Home</li>
-            <li>Jobs</li>
-            <li>Browse</li>
+            <li className="cursor-pointer hover:text-orange-600 transition-colors duration-200">
+              <Link to="/">Home</Link>
+            </li>
+
+            <li className="cursor-pointer hover:text-orange-600 transition-colors duration-200">
+              <Link to="/jobs">Jobs</Link>
+            </li>
+
+            <li className="cursor-pointer hover:text-orange-600 transition-colors duration-200">
+              <Link to="/browse">Browse</Link>
+            </li>
           </ul>
           {!user ? (
             <div className="flex items-center gap-2">

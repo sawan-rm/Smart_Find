@@ -27,7 +27,7 @@ const HeroSection = () => {
             className="outline-none border-none w-full"
           />
 
-          <button className="rounded-r-full bg-[#ed8033] p-2">
+          <button className="rounded-r-full bg-[#ed8033] hover:bg-[#d96f24] p-2">
             <Search className="h-5 w-7 text-white" />
           </button>
         </div>
