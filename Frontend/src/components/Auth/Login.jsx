@@ -67,7 +67,8 @@ const Login = () => {
               name="email"
               onChange={chageEventHandler}
               id="email"
-className="w-full mt-1 px-1 py-2 border-b border-gray-300 focus:outline-none focus:border-black"              placeholder="user@gmail.com"
+              className="w-full mt-1 px-1 py-2 border-b border-gray-300 focus:outline-none focus:border-black"
+              placeholder="user@gmail.com"
             />
           </div>
 
@@ -113,7 +114,9 @@ className="w-full mt-1 px-1 py-2 border-b border-gray-300 focus:outline-none foc
             </RadioGroup>
           </div>
           {loading ? (
-            <Button className="w-full my-4  bg-black text-white hover:opacity-80"> <Loader2 className="mr-2 h-4 w-4 animate-spin"/>
+            <Button className="w-full my-4  bg-black text-white hover:opacity-80">
+              {" "}
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               Please Wait...
             </Button>
           ) : (

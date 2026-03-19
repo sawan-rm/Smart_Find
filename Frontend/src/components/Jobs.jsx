@@ -20,13 +20,16 @@ const Jobs = () => {
           {/* Job Section */}
 
           {jobsArray.length <= 0 ? (
-            <span className="text-gray-500">Job Not Found</span>
+            // <span className="text-gray-500">Job Not Found</span>
+            <div className="flex items-center justify-center w-full h-[60vh] text-gray-500">
+              Job Not Found
+            </div>
           ) : (
             <div className="flex-1 h-[88vh] overflow-y-auto pb-5">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {jobsArray.map((item, index) => (
-                  <div>
-                    <Job key={index} />
+                  <div key={index}>
+                    <Job />
                   </div>
                 ))}
               </div>
