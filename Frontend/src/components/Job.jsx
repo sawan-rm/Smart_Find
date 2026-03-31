@@ -38,7 +38,7 @@ const Job = ({ job }) => {
       {/* Company Info */}
       <div className="flex items-center gap-3 mb-4">
         <Avatar className="h-10 w-10 border">
-          <AvatarImage src="https://github.com/shadcn.png" />
+          <AvatarImage src={job?.company?.logo}/> 
         </Avatar>
 
         <div>

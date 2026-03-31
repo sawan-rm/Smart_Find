@@ -24,7 +24,7 @@ const AdminJobs = () => {
         <div className="flex items-center justify-between">
           <Input
             className="w-fit"
-            placeholder="Filter by name"
+            placeholder="Filter by name, role"
             onChange={(e) => setinput(e.target.value)}
           />
           <Button
@@ -39,5 +39,5 @@ const AdminJobs = () => {
     </div>
   );
 };
-
+// 11:05
 export default AdminJobs;

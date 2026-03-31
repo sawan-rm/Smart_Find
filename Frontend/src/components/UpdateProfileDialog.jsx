@@ -201,5 +201,4 @@ const UpdateProfileDialog = ({ open, setopen }) => {
     </div>
   );
 };
-// 7:9
 export default UpdateProfileDialog;

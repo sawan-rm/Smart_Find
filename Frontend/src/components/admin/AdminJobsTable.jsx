@@ -9,7 +9,7 @@ import {
   TableCell,
 } from "../ui/table";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Edit2, MoreHorizontal } from "lucide-react";
+import { Edit2, Eye, MoreHorizontal } from "lucide-react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -72,18 +72,37 @@ const AdminJobsTable = () => {
 
                 <TableCell className="text-right cursor-pointer">
                   <Popover>
-                    <PopoverTrigger>
-                      <MoreHorizontal />
+                    <PopoverTrigger asChild>
+                      <button className="p-2 rounded-full hover:bg-gray-200 transition-all duration-200 active:scale-90">
+                        <MoreHorizontal className="w-5 h-5 text-gray-600" />
+                      </button>
                     </PopoverTrigger>
 
-                    <PopoverContent className="w-32 p-2">
-                      <div
+                    <PopoverContent
+                      align="end"
+                      className="w-44 p-2 rounded-xl border bg-white shadow-xl animate-in fade-in zoom-in-95 duration-200"
+                    >
+                      {/* Edit */}
+                      <button
                         onClick={() => navigate(`/admin/companies/${job._id}`)}
-                        className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 rounded transition"
+                        className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-50 group transition-all duration-150"
                       >
-                        <Edit2 className="w-4" />
-                        <span>Edit</span>
-                      </div>
+                        <Edit2 className="w-4 text-gray-500 group-hover:text-blue-600 transition" />
+                        <span className="text-sm text-gray-700 group-hover:text-blue-600">
+                          Edit Job
+                        </span>
+                      </button>
+
+                      {/* View */}
+                      <button
+                        onClick={() => navigate(`/admin/jobs/${job._id}/applicants`)}
+                        className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-green-50 group transition-all duration-150"
+                      >
+                        <Eye className="w-4 text-gray-500 group-hover:text-green-600 transition" />
+                        <span className="text-sm text-gray-700 group-hover:text-green-600">
+                          View Details
+                        </span>
+                      </button>
                     </PopoverContent>
                   </Popover>
                 </TableCell>

@@ -32,12 +32,15 @@ const JobDescription = () => {
     try {
       const res = await axios.get(
         `${APPLICATION_API_END_POINT}/apply/${jobId}`,
-        { withCredentials: true }
+        { withCredentials: true },
       );
 
       if (res.data.success) {
         setisApplied(true);
-        const UpdateSingleJob = {...singleJob, applications:[...singleJob.applications,{applicant:user?._id}]}
+        const UpdateSingleJob = {
+          ...singleJob,
+          applications: [...singleJob.applications, { applicant: user?._id }],
+        };
         dispatch(setSingleJob(UpdateSingleJob));
         toast.success(res.data.message);
       }
@@ -51,13 +54,18 @@ const JobDescription = () => {
   useEffect(() => {
     const fetchSingleJob = async () => {
       try {
-        const res = await axios.get(`${JOB_API_END_POINT}/${jobId}`, {
+        // console.log("FULL URL:", `${JOB_API_END_POINT}/${jobId}`);
+        const res = await axios.get(`${JOB_API_END_POINT}/get/${jobId}`, {
           withCredentials: true,
         });
 
         if (res.data.success) {
           dispatch(setSingleJob(res.data.job));
-          setisApplied(res.data.job.applications?.some(application=>application.applicant == user?._id));
+          setisApplied(
+            res.data.job.applications?.some(
+              (application) => application.applicant == user?._id,
+            ),
+          );
         }
       } catch (error) {
         console.log(error);
@@ -88,7 +96,11 @@ const JobDescription = () => {
           disabled={isApplied || loading}
           className={`rounded-lg ${isApplied ? "bg-black cursor-not-allowed text-white" : "bg-black hover:bg-gray-700 text-white"}`}
         >
-          {loading ? "Applying..." : isApplied ? "Already Applied" : "Apply Now"}
+          {loading
+            ? "Applying..."
+            : isApplied
+              ? "Already Applied"
+              : "Apply Now"}
         </Button>
       </div>
       <h1 className="border-b-2 border-b-gray-300 font-medium py-4">
