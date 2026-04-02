@@ -13,6 +13,7 @@ import CompanySetup from './components/admin/CompanySetup'
 import AdminJobs from './components/admin/AdminJobs'
 import PostJobs from './components/admin/postJobs'
 import Appliacnts from './components/admin/Appliacnts'
+import ProtectedRoute from './components/admin/ProtectedRoute'
 
 const appRouter = createBrowserRouter([
   {

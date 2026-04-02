@@ -63,25 +63,21 @@ const postJob = async (req, res) => {
 const getAllJobs = async (req, res) => {
   try {
     const keyword = req.query.keyword || "";
-    const query = {
-      $or: [
-        { title: { $regex: keyword, $options: "i" } },
-        { description: { $regex: keyword, $options: "i" } },
-        //Location wii Added
-      ],
-    };
+
+    const query = keyword
+      ? {
+          $or: [
+            { title: { $regex: keyword, $options: "i" } },
+            { description: { $regex: keyword, $options: "i" } },
+            { location: { $regex: keyword, $options: "i" } },
+          ],
+        }
+      : {};
 
     const jobs = await Job.find(query)
-      .populate({
-        path: "company",
-      })
+      .populate("company")
       .sort({ createdAt: -1 });
-    if (!jobs.length) {
-      return res.status(404).json({
-        message: "Jobs Not found",
-        success: false,
-      });
-    }
+
     return res.status(200).json({
       jobs,
       success: true,

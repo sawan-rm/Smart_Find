@@ -62,14 +62,17 @@ const ApplicantsTable = () => {
                 <TableCell>{item?.applicant?.phoneNumber}</TableCell>
                 <TableCell>
                   {item.applicant?.profile?.resume ? (
-                    <a
-                      className="text-blue-600 cursor-pointer"
-                      href={item?.applicant?.profile?.resume}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <span
+                      className="text-blue-600 cursor-pointer underline"
+                      onClick={() =>
+                        window.open(
+                          `https://docs.google.com/gview?url=${item?.applicant?.profile?.resume}&embedded=true`,
+                          "_blank",
+                        )
+                      }
                     >
                       {item?.applicant?.profile?.resumeOriginalName}
-                    </a>
+                    </span>
                   ) : (
                     <span>NA</span>
                   )}
@@ -102,5 +105,5 @@ const ApplicantsTable = () => {
     </div>
   );
 };
-// 12:26
+// 38
 export default ApplicantsTable;

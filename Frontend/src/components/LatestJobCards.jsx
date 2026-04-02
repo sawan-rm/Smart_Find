@@ -1,10 +1,13 @@
 import { Variable } from "lucide-react";
 import { Badge } from "./ui/badge";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const latestJobCards = ({ job }) => {
+    const navigate = useNavigate();
     return (
         <div
+            onClick={() => navigate(`/description/${job._id}`)}
             className="p-5 rounded-xl bg-white border border-gray-100 cursor-pointer
             transition-all duration-300 ease-out
             hover:shadow-md hover:-translate-y-1 hover:scale-[1.01]"

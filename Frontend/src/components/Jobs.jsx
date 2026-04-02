@@ -1,39 +1,59 @@
-import React from "react";
-import NavBar from "./shared/NavBar";
-import FilterCards from "./FilterCards";
+import React, { useEffect, useState } from "react";
+import Navbar from "./shared/Navbar";
+import FilterCard from "./FilterCards";
 import Job from "./Job";
 import { useSelector } from "react-redux";
-
-// const jobsArray = [1, 2, 3, 4, 5, 6, 7, 8];
+import { motion } from "framer-motion";
 
 const Jobs = () => {
-  const {allJobs} = useSelector(store=>store.job);
+  const { allJobs, searchedQuery } = useSelector((store) => store.job);
+  const [filterJobs, setFilterJobs] = useState([]);
+
+  useEffect(() => {
+    if (searchedQuery) {
+      const query = searchedQuery.toLowerCase();
+
+      const filteredJobs = allJobs.filter((job) => {
+        return (
+          job.title?.toLowerCase().includes(query) ||
+          job.description?.toLowerCase().includes(query) ||
+          job.location?.toLowerCase().includes(query) ||
+          job.salary?.toString().toLowerCase().includes(query)
+        );
+      });
+
+      setFilterJobs(filteredJobs);
+    } else {
+      setFilterJobs(allJobs);
+    }
+  }, [allJobs, searchedQuery]);
 
   return (
     <div>
-      <NavBar />
+      <Navbar />
 
-      <div className="max-w-[1400px] mx-auto mt-5 px-4">
-        <div className="flex gap-6">
-          {/* Filter Sidebar */}
-          <div className="w-1/4">
-            <FilterCards />
+      <div className="max-w-7xl mx-auto mt-5">
+        <div className="flex gap-5">
+          {/* FIXED WIDTH */}
+          <div className="w-[20%]">
+            <FilterCard />
           </div>
 
-          {/* Job Section */}
-
-          {allJobs.length <= 0 ? (
-            // <span className="text-gray-500">Job Not Found</span>
-            <div className="flex items-center justify-center w-full h-[60vh] text-gray-500">
-              Job Not Found
-            </div>
+          {filterJobs.length <= 0 ? (
+            <span>Job not found</span>
           ) : (
             <div className="flex-1 h-[88vh] overflow-y-auto pb-5">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                {allJobs.map((job) => (
-                  <div key={job?._id}>
-                    <Job job={job}/>
-                  </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {filterJobs.map((job) => (
+                  <motion.div
+                    key={job?._id}
+                    initial={{ opacity: 0, x: 100 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -100 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Job job={job} />
+                  </motion.div>
                 ))}
               </div>
             </div>

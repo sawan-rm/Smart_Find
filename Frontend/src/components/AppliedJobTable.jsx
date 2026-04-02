@@ -9,8 +9,12 @@ import {
     TableRow,
 } from "./ui/table";
 import { Badge } from "./ui/badge";
+import { useSelector } from "react-redux";
 
 const AppliedJobTable = () => {
+    const { allAppliedJobs } = useSelector((store) => store.job);
+    // console.log("applied jobss", allAppliedJobs);
+
     return (
         <div>
             <Table>
@@ -19,7 +23,7 @@ const AppliedJobTable = () => {
                 {/* FIXED PART */}
                 <TableHeader>
                     <TableRow>
-                        <TableHead>Date</TableHead>
+                        <TableHead>{Date}</TableHead>
                         <TableHead>Job Role</TableHead>
                         <TableHead>Company</TableHead>
                         <TableHead className="text-right">Status</TableHead>
@@ -27,16 +31,24 @@ const AppliedJobTable = () => {
                 </TableHeader>
 
                 <TableBody>
-                    {[1, 2, 3, 4].map((item, index) => (
-                        <TableRow key={index}
-                        className="transition-colors duration-200 hover:bg-gray-200"
+                    {allAppliedJobs.length <= 0 ? <span>You haven't applied for any job.</span> : allAppliedJobs.map((appliedJobs) => (
+                        <TableRow
+                            key={appliedJobs._id}
+                            className="transition-colors duration-200 hover:bg-gray-200"
                         >
-                            <TableCell>19-03-2026</TableCell>
-                            <TableCell>Frontend Developer</TableCell>
-                            <TableCell>Google</TableCell>
+                            <TableCell>{appliedJobs.createdAt.split("T")[0]}</TableCell>
+                            <TableCell>{appliedJobs.job.jobType}</TableCell>
+                            <TableCell>{appliedJobs.job?.company?.name}</TableCell>
                             <TableCell className="text-right">
-                                <Badge className="bg-green-500 text-white hover:bg-green-600 rounded-md ">
-                                    Selected
+                                <Badge
+                                    className={`rounded-md text-white ${appliedJobs.status === "accepted"
+                                            ? "bg-green-500 hover:bg-green-600"
+                                            : appliedJobs.status === "rejected"
+                                                ? "bg-red-500 hover:bg-red-600"
+                                                : "bg-yellow-500 hover:bg-yellow-600"
+                                        }`}
+                                >
+                                    {appliedJobs.status}
                                 </Badge>
                             </TableCell>
                         </TableRow>

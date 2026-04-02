@@ -1,6 +1,7 @@
 const Company = require("../model/Company.js");
 const getDataUri = require("../utils/dataUri");
 const cloudinary = require("../utils/Cloudinary");
+const { default: mongoose } = require("mongoose");
 
 const registerCompany = async (req, res) => {
   try {
@@ -60,6 +61,13 @@ const getCompanyById = async (req, res) => {
   try {
     const user_id = req.params.id;
     // console.log("Company Id:", req.params.id);
+    if (!mongoose.Types.ObjectId.isValid(user_id)) {
+      return res.status(400).json({
+        message: "Invalid company ID",
+        success: false,
+      });
+    }
+
     const findCompany = await Company.findById(user_id);
     if (!findCompany) {
       return res.status(404).json({
@@ -72,7 +80,11 @@ const getCompanyById = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    console.log(`Inernal Server erro: `, error);
+    console.log("Internal Server error:", error);
+    return res.status(500).json({
+      message: "Server error",
+      success: false,
+    });
   }
 };
 
@@ -96,7 +108,7 @@ const updateCompanyInfo = async (req, res) => {
     }
 
     const company = await Company.findByIdAndUpdate(companyId, updateData, {
-      new: true, 
+      new: true,
       runValidators: true,
     });
 

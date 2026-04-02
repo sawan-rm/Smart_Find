@@ -3,7 +3,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup } from "@/components/ui/radio-group";
 import { Button } from "../ui/button";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
 import { USER_API_END_POINT } from "@/Utils/constant";
@@ -17,7 +17,7 @@ const Login = () => {
     password: "",
     role: "",
   });
-  const { loading } = useSelector((store) => store.auth);
+  const { loading, user } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
   const chageEventHandler = (e) => {
     setinput({ ...input, [e.target.name]: e.target.value });
@@ -48,6 +48,11 @@ const Login = () => {
       dispatch(setLoading(false));
     }
   };
+  useEffect(()=>{
+    if(user){
+      navigate('/');
+    }
+  },[])
   return (
     <div>
       <NavBar />
